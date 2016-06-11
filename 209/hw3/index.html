@@ -82,8 +82,8 @@
          .enter()
          .append("circle")
          .attr({
-           "cx": d => xScale(d['steps']),
-           "cy": d => yScale(d['sleep']),
+           "cx": function(d) { return xScale(d['steps']) },
+           "cy": function(d) { return yScale(d['sleep']) },
            "r":  2
          });
 
