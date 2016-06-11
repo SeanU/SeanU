@@ -1,0 +1,40 @@
+* {
+	font-family: sans-serif;
+}
+
+div {
+	max-width: 750px;
+	margin: 20px;
+}
+
+h1, h2, h3, h4 {
+	margin:auto;
+}
+
+.title {
+	text-align: right;
+	margin-left: 50px;
+}
+
+.chatter {
+	border-width: 1px;
+	border-style: solid;
+	border-color: gray;
+	border-radius: 10px;
+	padding: 10px 20px;
+}
+
+#plot {
+	margin:20px;
+}
+
+.axis path,
+.axis line {
+	fill: none;
+	stroke: black;
+	shape-rendering: crispEdges;
+}
+
+.axis text {
+	font-size: 11px;
+}

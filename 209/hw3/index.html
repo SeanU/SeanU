@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>W209 HW3</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+</head>
+<body>
+
+  <div class='title'>
+    <h1>MIDS w209 Assignment 3</h1>
+    <h2>Static visualization in D3</h2>
+    <h3>Sean Underwood</h3>
+    <h4>June 11, 2016</h4>
+  </div>
+
+  <div class='chatter'>
+    <p>Does exercise help me sleep?</p>
+    <p>The following plot explores that question by plotting data collected using my activity tracker.</p>
+    <p>The following data shows a scatterplot of how many steps I walked in a day, and how many hours I slept the following night. The displayed gives an incomplete coverage of days from 2015/04/23 - when I first bought the tracker - to 2016/06/10.</p>
+
+    <p>Of an original pool of 407 days' worth of data, only 135 are reflected. The rest were excluded for the following reasons:</p>
+    <ul>
+      <li>259 excluded for having no sleep data. I frequently neglect to wear it at night, or forget to turn it to sleep mode.</li>
+      <li>9 excluded for having sleep < 5h. These outliers likely represent nights when I had to get up to attend to my son, which my sleep tracker sometimes detects as me waking up, and I forgot to put it back into sleep mode before going back to bed.</li>
+      <li>4 excluded for having fewer than 4,000 steps registered. These likely represent days that I forgot to charge or wear my tracker.</li>
+    </ul>
+  </div>
+
+  <div id='plot'></div>
+
+  <div class='chatter'>
+    <p><a href='sleepsteps.csv'>plot (not raw) data</a></p>    
+  </div>
+
+  <script type="text/javascript">
+    var full_width = 500;
+    var full_height = 300;
+    
+    var padding = { top: 20, right: 20, bottom: 30, left: 30};
+    var width = full_width - (padding.left + padding.right);
+    var height = full_height - (padding.top + padding.bottom);
+
+    d3.csv('sleepsteps.csv', draw_plot);
+
+    function draw_plot(data) {
+      var svg = d3.select("#plot")
+                  .append("svg")
+                  .attr({
+                    "width": full_width,
+                    "height": full_height
+                  })
+                  .append("g")
+                  .attr({
+                    "width": full_width,
+                    "height": full_height,
+                    "transform": "translate(" + padding.left + "," + padding.top + ")"
+                  });
+
+      var xScale = d3.scale.linear()
+                     .domain([0, 20000])
+                     .range([0, width])
+                     .nice();
+
+      var yScale = d3.scale.linear()
+                     .domain([4, 10])
+                     .range([height, 0])
+                     .nice();
+
+      var xAxis = d3.svg.axis()
+                    .scale(xScale)
+                    .orient("bottom");
+
+      var yAxis = d3.svg.axis()
+                    .scale(yScale)
+                    .orient("left");
+
+
+      svg.selectAll("circle")
+         .data(data)
+         .enter()
+         .append("circle")
+         .attr({
+           "cx": d => xScale(d['steps']),
+           "cy": d => yScale(d['sleep']),
+           "r":  2
+         });
+
+      svg.append("g")
+           .attr( {
+              "class": "axis",
+              "transform": "translate(0," + height + ")"
+            })
+           .call(xAxis)
+         .append("text")
+           .attr({
+            "x": width,
+            "y": -4
+           })
+           .style("text-anchor", "end")
+           .text("Steps");
+
+      svg.append("g")
+           .attr("class", "axis")
+           .call(yAxis)
+         .append("text")
+           .attr({
+            "x": 4,
+            "y": padding.top / 2
+           })
+           .text("Sleep (h)");
+    }
+
+  </script>
+</body>
+</html>
