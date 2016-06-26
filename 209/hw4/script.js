@@ -127,23 +127,30 @@ function drawAxes(plt, data) {
 };
 
 function drawData(plt, data) {
-	plt.graph.selectAll("circle").remove();
-
-	data = filter(data);
-
 	plt.graph.selectAll("circle")
-	.data(data)
-	.enter()
-	.append("circle")
-	.attr({
-		"cx": function(d) { return plt.xScale(d['steps']) },
-		"cy": function(d) { return plt.yScale(d['sleep']) },
-		"r":  2
-	});
+		.data(data)
+		.enter()
+		.append("circle")
+		.attr({
+			"cx": function(d) { return plt.xScale(d['steps']) },
+			"cy": function(d) { return plt.yScale(d['sleep']) },
+			"r":  3
+		});
 }
 
-function filter(data) {
-	return data.filter(dayIsSelected);
+function updateDataVisibility(plt, data) {
+	plt.graph.selectAll("circle")
+		.data(data)
+		.transition()
+		.style("opacity", selectOpacity);
+}
+
+function selectOpacity(d) {
+	if (dayIsSelected(d)) {
+		return 0.75;
+	} else {
+		return 0.0;
+	}
 }
 
 function dayIsSelected(d) {
@@ -159,7 +166,8 @@ function onDayCheckboxClick(plt, data, src) {
 	{
 		selectedDays.delete(src.id);
 	}
-	drawData(plt, data);
+
+	updateDataVisibility(plt, data);
 }
 
 
