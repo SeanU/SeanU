@@ -16,6 +16,25 @@ label:after {
 	white-space: pre;
 }
 
+div.tooltip {
+	position: absolute;
+	text-align: left;
+	font-size: 10px;
+	padding: 2px;
+	margin: 0px;
+	border-style: solid;
+	border-color: black;
+	border-width: 1px;
+	border-radius: 5px;
+	pointer-events: none;
+	background: white;
+	opacity: 0;
+}
+
+div.tooltip p {
+	line-height: 15%;
+}
+
 .title {
 	text-align: right;
 	margin-left: 50px;

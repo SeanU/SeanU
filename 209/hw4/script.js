@@ -29,6 +29,8 @@ function buildPlot(plt, data) {
 
 	createDayPicker(plt, data);
 
+	plt.tooltip = createTooltipElement(plt);
+
 	plt.graph = createGraphElement(plt);
 	drawGraph(plt, data);
 };
@@ -80,6 +82,12 @@ function createDayPicker(plt, data) {
 				function() { onDayCheckboxClick(plt, data, this);});
 }
 
+function createTooltipElement(plt) {
+	return d3.select("body")
+				.append("div")
+				.attr("class", "tooltip");
+}
+
 function createGraphElement(plt) {
 	return d3.select(plt.plotDiv)
 			.append("svg")
@@ -121,7 +129,7 @@ function drawAxes(plt, data) {
 		.append("text")
 		.attr({
 			"x": 4,
-			"y": plt.padding / 2
+			"y": 10
 		})
 		.text("Sleep (h)");
 };
@@ -134,8 +142,12 @@ function drawData(plt, data) {
 		.attr({
 			"cx": function(d) { return plt.xScale(d['steps']) },
 			"cy": function(d) { return plt.yScale(d['sleep']) },
-			"r":  3
-		});
+			"r":  5
+		})
+		.on("mouseover", function(d) { onMouseOver(plt, d, this) })
+		.on("mouseout", function(d) { onMouseOut(plt, this) });
+
+	updateDataVisibility(plt, data);
 }
 
 function updateDataVisibility(plt, data) {
@@ -170,4 +182,36 @@ function onDayCheckboxClick(plt, data, src) {
 	updateDataVisibility(plt, data);
 }
 
+function onMouseOver(plt, d, target) {
+	d3.select(target)
+		.transition()
+		.duration(100)
+		.attr("fill", "orange");
+
+	plt.tooltip.html("");
+	plt.tooltip.append("p").html("Date: " + d.date);
+	plt.tooltip.append("p").html("Steps: " + d.steps);
+	plt.tooltip.append("p").html("Sleep: " + Number(d.sleep).toFixed(1));
+	plt.tooltip.style({
+		left: (d3.event.pageX + 10) + "px",
+		top: (d3.event.pageY - 20) + "px"
+	});
+	plt.tooltip
+		.transition()
+		.duration(500)
+		.style("opacity", 1);
+}
+
+
+function onMouseOut(plt, target) {
+	d3.select(target)
+		.transition()
+		.duration(100)
+		.attr("fill", "black");
+
+	plt.tooltip
+		.transition()
+		.duration(100)
+		.style("opacity", 0);	
+}
 
