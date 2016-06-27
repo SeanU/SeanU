@@ -3,12 +3,18 @@
 }
 
 div {
-	max-width: 750px;
-	margin: 20px;
+	/*max-width: 750px;*/
+	/*margin: 20px;*/
+	padding: 20px;
 }
 
 h1, h2, h3, h4 {
 	margin:auto;
+}
+
+p {
+	float: none;
+	margin: 10px;
 }
 
 label:after {
@@ -31,13 +37,20 @@ div.tooltip {
 	opacity: 0;
 }
 
+div.tooltip {
+	/*padding: 5px;*/
+}
+
 div.tooltip p {
 	line-height: 15%;
 }
 
+input[type="checkbox"] {
+	margin-right: 4px;
+}
+
 .title {
 	text-align: right;
-	margin-left: 50px;
 }
 
 .chatter {
@@ -45,11 +58,10 @@ div.tooltip p {
 	border-style: solid;
 	border-color: gray;
 	border-radius: 10px;
-	padding: 10px 20px;
 }
 
-#plot {
-	margin:20px;
+#days {
+	padding-top: 50px;
 }
 
 .axis path,

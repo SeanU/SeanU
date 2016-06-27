@@ -209,9 +209,9 @@ function onMouseOut(plt, target) {
 		.duration(100)
 		.attr("fill", "black");
 
-	plt.tooltip
-		.transition()
-		.duration(100)
-		.style("opacity", 0);	
+	// plt.tooltip
+	// 	.transition()
+	// 	.duration(100)
+	// 	.style("opacity", 0);	
 }
 

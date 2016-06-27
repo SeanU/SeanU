@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>W209 HW3</title>
+  <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
   <link rel="stylesheet" type="text/css" href="style.css">
   <!--<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>-->
   <script src="d3.js"></script>
@@ -10,30 +11,30 @@
 </head>
 <body>
 
-  <div class='title'>
+<div class='container'>
+  <div class='title col-md-10'>
     <h1>MIDS w209 Assignment 4</h1>
     <h2>Interactive visualization in D3</h2>
     <h3>Sean Underwood</h3>
-    <h4>June 11, 2016</h4>
+    <h4>June 26, 2016</h4>
   </div>
 
-  <div class='chatter'>
-    <p>Does exercise help me sleep?</p>
-  </div>
-
-  <div id='plot'></div>
-  <div id='days'>
+<div class='row'>
+  <div id='plot' class='col-md-8'></div>
+  <div id='days' class='col-md-1'>
     Show:
     <form id='dayPicker'></form>
   </div>
+</div>
 
-  <div class='chatter'>
+  <div class='chatter col-md-10'>
     <p><a href='https://github.com/SeanU/SeanU.github.io/tree/master/209/hw4'>source (GitHub)</a></p>    
   </div>
+</div>
 
   <script type="text/javascript">
     var plot = {
-      width: 800,
+      width: 700,
       height: 500,
       padding: 30,
       plotDiv: '#plot',
